@@ -378,7 +378,7 @@ export default function Index() {
                           ))}
                         </div>
                       </div>
-                      <span className="font-montserrat font-bold text-foreground">{av.price}</span>
+
                     </div>
                   </div>
                 </div>
