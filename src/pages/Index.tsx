@@ -12,7 +12,6 @@ const antiviruses = [
     accentBg: "rgba(168, 85, 247, 0.08)",
     borderColor: "rgba(168, 85, 247, 0.3)",
     rating: 9.7,
-    price: "от 1 990 ₽/год",
     description:
       "Флагманский продукт Kaspersky с максимальной защитой для всей семьи. Включает VPN, менеджер паролей, родительский контроль и защиту от кражи данных. Неизменно занимает первые строчки в независимых тестах AV-TEST и AV-Comparatives.",
     pros: ["Лучшее обнаружение угроз", "VPN в комплекте", "Менеджер паролей", "Кроссплатформенность"],
@@ -31,7 +30,6 @@ const antiviruses = [
     accentBg: "rgba(34, 211, 238, 0.08)",
     borderColor: "rgba(34, 211, 238, 0.3)",
     rating: 9.3,
-    price: "от 1 190 ₽/год",
     description:
       "Легендарный антивирус с минимальным влиянием на производительность системы. ESET NOD32 использует технологию ThreatSense для проактивного обнаружения новых угроз. Идеален для слабых и средних ПК, не замедляет работу даже при полном сканировании.",
     pros: ["Минимальная нагрузка на систему", "Быстрое сканирование", "Эффективная эвристика", "Доступная цена"],
@@ -50,7 +48,6 @@ const antiviruses = [
     accentBg: "rgba(236, 72, 153, 0.08)",
     borderColor: "rgba(236, 72, 153, 0.3)",
     rating: 9.5,
-    price: "от 1 750 ₽/год",
     description:
       "Румынский гигант с непревзойдённым уровнем защиты и богатым набором функций. Технология Advanced Threat Defense отслеживает поведение приложений в реальном времени. В 2025 году набрал 100% в тестах защиты от вирусов AV-TEST шесть раз подряд.",
     pros: ["100% обнаружение в тестах", "Защита веб-камеры", "Продвинутый VPN", "Автопилот безопасности"],
@@ -69,7 +66,6 @@ const antiviruses = [
     accentBg: "rgba(249, 115, 22, 0.08)",
     borderColor: "rgba(249, 115, 22, 0.3)",
     rating: 9.1,
-    price: "от 2 290 ₽/год",
     description:
       "Norton 360 — комплексное решение с облачным резервным копированием 50 ГБ, мощным VPN без ограничений и мониторингом Тёмного интернета. Защищает от программ-вымогателей с гарантией возврата денег в случае заражения.",
     pros: ["VPN без ограничений", "50 ГБ облачный бэкап", "Мониторинг Dark Web", "Гарантия от вирусов"],
@@ -88,7 +84,6 @@ const antiviruses = [
     accentBg: "rgba(16, 185, 129, 0.08)",
     borderColor: "rgba(16, 185, 129, 0.3)",
     rating: 8.8,
-    price: "от 990 ₽/год",
     description:
       "Ведущий российский антивирус с 30-летней историей. Dr.Web особенно эффективен против угроз, распространённых в России и СНГ. Включает спам-фильтр, брандмауэр, родительский контроль и защиту от программ-вымогателей. Не передаёт данные за рубеж.",
     pros: ["Российская разработка", "Низкая цена", "Хорошее обнаружение СНГ-угроз", "Встроенный брандмауэр"],
@@ -107,7 +102,6 @@ const antiviruses = [
     accentBg: "rgba(139, 92, 246, 0.08)",
     borderColor: "rgba(139, 92, 246, 0.3)",
     rating: 8.6,
-    price: "от 1 490 ₽/год",
     description:
       "Malwarebytes прославился как лучший инструмент для удаления существующего заражения. Premium-версия обеспечивает защиту в реальном времени и блокировку рекламы. Отлично работает в связке с другим антивирусом как дополнительный слой защиты.",
     pros: ["Отличное удаление угроз", "Блокировщик рекламы", "Совместим с другими антивирусами", "Простой интерфейс"],
@@ -150,11 +144,9 @@ const StarRating = ({ rating }: { rating: number }) => {
 export default function Index() {
   const [activeCategory, setActiveCategory] = useState("Все");
   const [expandedId, setExpandedId] = useState<number | null>(null);
-  const [sortBy, setSortBy] = useState<"rating" | "price">("rating");
-
   const filtered = antiviruses
     .filter((av) => activeCategory === "Все" || av.os.includes(activeCategory))
-    .sort((a, b) => sortBy === "rating" ? b.rating - a.rating : a.rating - b.rating);
+    .sort((a, b) => b.rating - a.rating);
 
   return (
     <div className="min-h-screen bg-background noise-bg overflow-x-hidden">
@@ -231,23 +223,7 @@ export default function Index() {
                 </button>
               ))}
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground font-ibm">Сортировка:</span>
-              <button
-                onClick={() => setSortBy("rating")}
-                className={`px-3 py-1.5 rounded-lg text-sm font-montserrat font-semibold transition-all ${sortBy === "rating" ? "text-white" : "glass text-muted-foreground"}`}
-                style={sortBy === "rating" ? { background: "linear-gradient(135deg, #a855f7, #22d3ee)" } : {}}
-              >
-                По рейтингу
-              </button>
-              <button
-                onClick={() => setSortBy("price")}
-                className={`px-3 py-1.5 rounded-lg text-sm font-montserrat font-semibold transition-all ${sortBy === "price" ? "text-white" : "glass text-muted-foreground"}`}
-                style={sortBy === "price" ? { background: "linear-gradient(135deg, #a855f7, #22d3ee)" } : {}}
-              >
-                По цене
-              </button>
-            </div>
+
           </div>
         </section>
 
@@ -256,7 +232,7 @@ export default function Index() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {filtered.map((av, idx) => {
               const isExpanded = expandedId === av.id;
-              const isTop = idx === 0 && sortBy === "rating";
+              const isTop = idx === 0;
               return (
                 <div
                   key={av.id}
