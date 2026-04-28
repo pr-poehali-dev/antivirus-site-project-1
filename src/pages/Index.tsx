@@ -378,15 +378,7 @@ export default function Index() {
                           ))}
                         </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="font-montserrat font-bold text-foreground">{av.price}</span>
-                        <button
-                          className="px-5 py-2.5 rounded-xl font-montserrat font-bold text-sm text-white transition-all hover:scale-105 active:scale-95"
-                          style={{ background: `linear-gradient(135deg, ${av.accent}cc, ${av.accent})` }}
-                        >
-                          Купить
-                        </button>
-                      </div>
+                      <span className="font-montserrat font-bold text-foreground">{av.price}</span>
                     </div>
                   </div>
                 </div>
