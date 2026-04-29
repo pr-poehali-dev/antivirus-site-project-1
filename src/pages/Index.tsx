@@ -142,6 +142,7 @@ const StarRating = ({ rating }: { rating: number }) => {
 };
 
 export default function Index() {
+  const [activeTab, setActiveTab] = useState<"rating" | "about">("rating");
   const [activeCategory, setActiveCategory] = useState("Все");
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const filtered = antiviruses
@@ -204,9 +205,29 @@ export default function Index() {
           </div>
         </section>
 
-        {/* Filters */}
+        {/* Tab switcher */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+          <div className="flex gap-2 p-1 glass rounded-xl w-fit mx-auto mb-2">
+            {[
+              { key: "rating", label: "Рейтинг", icon: "Star" },
+              { key: "about", label: "Что такое антивирус", icon: "BookOpen" },
+            ].map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key as "rating" | "about")}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-montserrat font-semibold transition-all duration-200 ${activeTab === tab.key ? "text-white shadow-lg" : "text-muted-foreground hover:text-foreground"}`}
+                style={activeTab === tab.key ? { background: "linear-gradient(135deg, #a855f7, #22d3ee)" } : {}}
+              >
+                <Icon name={tab.icon} size={15} />
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Filters */}
+        {activeTab === "rating" && (
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
             <div className="flex flex-wrap gap-2">
               {categories.map((cat) => (
                 <button
@@ -223,12 +244,11 @@ export default function Index() {
                 </button>
               ))}
             </div>
-
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Cards Grid */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
+        {activeTab === "rating" && (<section className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {filtered.map((av, idx) => {
               const isExpanded = expandedId === av.id;
@@ -361,7 +381,104 @@ export default function Index() {
               );
             })}
           </div>
-        </section>
+        </section>)}
+
+        {/* About tab */}
+        {activeTab === "about" && (
+          <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-20 animate-slide-up">
+            {/* What is antivirus */}
+            <div className="rounded-2xl p-8 mb-6 glass" style={{ border: "1px solid rgba(168, 85, 247, 0.2)" }}>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #a855f7, #22d3ee)" }}>
+                  <Icon name="Shield" size={18} className="text-white" />
+                </div>
+                <h2 className="font-montserrat font-black text-2xl gradient-text">Что такое антивирус?</h2>
+              </div>
+              <p className="font-ibm text-muted-foreground leading-relaxed mb-4">
+                Антивирус — это программа, которая защищает ваш компьютер, смартфон или планшет от вредоносного программного обеспечения: вирусов, троянов, шпионских программ, программ-вымогателей и других цифровых угроз.
+              </p>
+              <p className="font-ibm text-muted-foreground leading-relaxed mb-4">
+                Современный антивирус работает сразу в нескольких направлениях: сканирует файлы при открытии, следит за поведением программ в реальном времени, блокирует опасные сайты и защищает личные данные при работе в интернете.
+              </p>
+              <p className="font-ibm text-muted-foreground leading-relaxed">
+                Без антивируса ваш компьютер похож на дом без замка — злоумышленники могут похитить пароли, банковские данные или зашифровать все файлы и потребовать выкуп.
+              </p>
+            </div>
+
+            {/* Timeline */}
+            <div className="rounded-2xl p-8 glass" style={{ border: "1px solid rgba(34, 211, 238, 0.2)" }}>
+              <div className="flex items-center gap-3 mb-7">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #22d3ee, #a855f7)" }}>
+                  <Icon name="Clock" size={18} className="text-white" />
+                </div>
+                <h2 className="font-montserrat font-black text-2xl gradient-text">История антивирусов</h2>
+              </div>
+
+              <div className="space-y-6">
+                {[
+                  {
+                    year: "1971",
+                    title: "Первый вирус — Creeper",
+                    text: "Программист Боб Томас создал первый самовоспроизводящийся вирус Creeper для сети ARPANET — предшественника интернета. Вирус не причинял вреда, но выводил сообщение «I'm the creeper, catch me if you can!».",
+                    color: "#a855f7",
+                  },
+                  {
+                    year: "1972",
+                    title: "Первый антивирус — Reaper",
+                    text: "В ответ на Creeper появилась программа Reaper — первый в истории антивирус. Её единственной задачей было найти и удалить Creeper. Так началась вечная гонка между вирусами и защитой.",
+                    color: "#22d3ee",
+                  },
+                  {
+                    year: "1987",
+                    title: "Рождение коммерческих антивирусов",
+                    text: "Немецкая компания G Data выпустила первый коммерческий антивирус для персональных компьютеров. Вскоре появились Norton Antivirus и McAfee — имена, которые стали нарицательными.",
+                    color: "#ec4899",
+                  },
+                  {
+                    year: "1992",
+                    title: "Эпидемия вируса Michelangelo",
+                    text: "Вирус Michelangelo должен был уничтожить данные на миллионах ПК 6 марта 1992 года. Именно эта угроза сделала антивирусы массовым продуктом — продажи защитного ПО выросли в десятки раз.",
+                    color: "#f97316",
+                  },
+                  {
+                    year: "2000-е",
+                    title: "Интернет-угрозы и облачная защита",
+                    text: "С распространением интернета появились черви, трояны и фишинг. Антивирусы обзавелись сетевыми экранами, защитой почты и браузера. В конце 2000-х началась эра облачной защиты с базами угроз в реальном времени.",
+                    color: "#10b981",
+                  },
+                  {
+                    year: "2010-е",
+                    title: "Вымогатели и искусственный интеллект",
+                    text: "Программы-вымогатели (ransomware) стали главной угрозой — они шифруют все файлы и требуют выкуп. В ответ антивирусы начали использовать машинное обучение для обнаружения новых, неизвестных угроз по их поведению.",
+                    color: "#8b5cf6",
+                  },
+                  {
+                    year: "Сегодня",
+                    title: "Комплексная кибербезопасность",
+                    text: "Современный антивирус — это целая экосистема: защита от вирусов, VPN, менеджер паролей, защита веб-камеры, мониторинг утечек данных. Искусственный интеллект позволяет обнаруживать угрозы за секунды до того, как они успеют навредить.",
+                    color: "#22d3ee",
+                  },
+                ].map((item) => (
+                  <div key={item.year} className="flex gap-5">
+                    <div className="flex flex-col items-center gap-1 flex-shrink-0">
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center font-montserrat font-black text-xs text-white flex-shrink-0" style={{ background: `linear-gradient(135deg, ${item.color}88, ${item.color})` }}>
+                        {item.year.length <= 4 ? item.year : "⬤"}
+                      </div>
+                      <div className="w-px flex-1 opacity-20" style={{ background: item.color }} />
+                    </div>
+                    <div className="pb-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-montserrat font-black text-sm" style={{ color: item.color }}>{item.year}</span>
+                      </div>
+                      <h3 className="font-montserrat font-bold text-base text-foreground mb-1">{item.title}</h3>
+                      <p className="font-ibm text-sm text-muted-foreground leading-relaxed">{item.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Footer */}
         <footer className="border-t border-white/5 py-8">
