@@ -405,6 +405,78 @@ export default function Index() {
               </p>
             </div>
 
+            {/* Brand histories */}
+            <div className="rounded-2xl p-8 mb-6 glass" style={{ border: "1px solid rgba(236, 72, 153, 0.2)" }}>
+              <div className="flex items-center gap-3 mb-7">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #ec4899, #f97316)" }}>
+                  <Icon name="Building2" size={18} className="text-white" />
+                </div>
+                <h2 className="font-montserrat font-black text-2xl gradient-text">История брендов</h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  {
+                    name: "Kaspersky",
+                    founded: "1997",
+                    country: "Россия",
+                    accent: "#a855f7",
+                    history: "Евгений Касперский основал компанию в Москве после того, как в 1989 году лично вылечил свой компьютер от вируса Cascade. Сегодня Kaspersky — один из крупнейших производителей защитного ПО в мире с офисами в 31 стране.",
+                  },
+                  {
+                    name: "ESET",
+                    founded: "1992",
+                    country: "Словакия",
+                    accent: "#22d3ee",
+                    history: "Компания из Братиславы выросла из кружка программистов, которые в 1987 году создали антивирус NOD — один из первых в Европе. Название ESET не расшифровывается официально. Сегодня продукты компании защищают более 110 миллионов пользователей.",
+                  },
+                  {
+                    name: "Bitdefender",
+                    founded: "2001",
+                    country: "Румыния",
+                    accent: "#ec4899",
+                    history: "Румынская компания из Бухареста начинала как небольшая команда энтузиастов. За 20 лет Bitdefender стал лидером независимых тестов: в AV-TEST компания регулярно получает максимальные баллы. Сегодня защищает более 500 миллионов устройств.",
+                  },
+                  {
+                    name: "Norton (Gen Digital)",
+                    founded: "1991",
+                    country: "США",
+                    accent: "#f97316",
+                    history: "Norton Antivirus был создан Питером Нортоном и выпущен компанией Symantec. Это один из старейших антивирусов — в 1990-е он был установлен почти на каждом новом ПК. В 2022 году Symantec потребительский бизнес переименовали в Gen Digital.",
+                  },
+                  {
+                    name: "Dr.Web",
+                    founded: "1992",
+                    country: "Россия",
+                    accent: "#10b981",
+                    history: "Игорь Данилов написал первую версию Dr.Web в 1991 году. Компания «Доктор Веб» стала первым российским разработчиком, получившим сертификат ФСТЭК. Особую известность приобрела благодаря способности лечить уже заражённые системы.",
+                  },
+                  {
+                    name: "Malwarebytes",
+                    founded: "2008",
+                    country: "США",
+                    accent: "#8b5cf6",
+                    history: "Компания выросла из бесплатного инструмента, который Марчин Клечинский написал для очистки домашнего ПК от заражения. Malwarebytes быстро завоевал популярность как лучшее средство удаления рекламных и шпионских программ, которые пропускали другие антивирусы.",
+                  },
+                ].map((brand) => (
+                  <div key={brand.name} className="rounded-xl p-5" style={{ background: `${brand.accent}08`, border: `1px solid ${brand.accent}22` }}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-9 h-9 rounded-lg flex items-center justify-center font-montserrat font-black text-base text-white flex-shrink-0" style={{ background: `linear-gradient(135deg, ${brand.accent}55, ${brand.accent})` }}>
+                        {brand.name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-montserrat font-black text-sm text-foreground">{brand.name}</div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-ibm text-xs" style={{ color: brand.accent }}>с {brand.founded}</span>
+                          <span className="text-xs text-muted-foreground font-ibm">· {brand.country}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="font-ibm text-sm text-muted-foreground leading-relaxed">{brand.history}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Timeline */}
             <div className="rounded-2xl p-8 glass" style={{ border: "1px solid rgba(34, 211, 238, 0.2)" }}>
               <div className="flex items-center gap-3 mb-7">
